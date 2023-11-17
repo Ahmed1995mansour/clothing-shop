@@ -4,11 +4,8 @@ const CategoryItem = ({ category }) => {
   const { title, imageUrl } = category;
   return (
     <div className='category-container'>
-      <img src='' />
-      <div
-        className='background-image'
-        style={{ backgroundImage: `url(${imageUrl})` }}
-      ></div>
+      {/* <img src='' alt='category image' /> */}
+      <div className='background-image' style={{ backgroundImage: `url(${imageUrl})` }}></div>
       <div className='category-body-container'>
         <h2>{title}</h2>
         <p>Shop Now</p>
