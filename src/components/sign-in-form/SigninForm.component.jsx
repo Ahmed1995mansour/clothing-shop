@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   SignInAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
   signInWithGooglePopup,
 } from '../../utils/firebase/firebase.utils';
 import Button from '../button/Button.component';
@@ -17,13 +16,9 @@ const SigninForm = () => {
   const { email, password } = formFields;
 
   const signinWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
   const handleChange = event => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -33,8 +28,7 @@ const SigninForm = () => {
     event.preventDefault();
 
     try {
-      const response = await SignInAuthUserWithEmailAndPassword(email, password);
-      console.log(response);
+      await SignInAuthUserWithEmailAndPassword(email, password);
     } catch (error) {
       switch (error.code) {
         case 'auth/invalid-login-credentials':
@@ -48,7 +42,7 @@ const SigninForm = () => {
   };
 
   return (
-    <div className='sign-up-container'>
+    <div className='sign-in-container'>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -59,6 +53,7 @@ const SigninForm = () => {
           required
           name='email'
           value={email}
+          autoFocus
         />
 
         <FormInput
@@ -72,7 +67,7 @@ const SigninForm = () => {
         <div className='buttons-container'>
           <Button type='submit'>Sign In</Button>
           <Button type='button' onClick={signinWithGoogle} buttonType='google'>
-            Google Sign In
+            Sign In With Google
           </Button>
         </div>
       </form>
